@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="VidHub.WinUI.UserControls.TitleBarUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VidHub.WinUI.UserControls"
+    xmlns:viewmodel="using:VidHub.ViewModels"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.DataContext>
+        <viewmodel:TitlebarViewModel />
+    </UserControl.DataContext>
+
+    <Grid Height="32">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <ImageIcon Source="/Assets/SmallTile.png" Width="24" Height="24" Margin="4" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" />
+
+        <MenuBar HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1">
+            <MenuBarItem Title="File" Height="32" Margin="0">
+                <MenuFlyoutItem Text="Import collection" Icon="Import" Command="{Binding ImportFileCommand}" />
+                <MenuFlyoutItem Text="Load files" Icon="OpenFile" Command="{Binding LoadFilesCommand}" />
+                <MenuFlyoutItem Text="Load folder" Icon="OpenLocal" Command="{Binding LoadSingleFolderCommand}" />
+                <MenuFlyoutItem Text="Load folder &amp; sub-folders" Icon="OpenLocal" Command="{Binding LoadAllFolderCommand}" />
+                <MenuFlyoutSeparator />
+                <MenuFlyoutItem Text="Export collection" Command="{Binding ExportFileCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xede1;" FontFamily="Segoe Fluent Icons" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+            </MenuBarItem>
+            <MenuBarItem Title="View" Height="32" Margin="0">
+                <MenuFlyoutItem Text="Open side panel" Command="{Binding OpenSidePanelCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xea5b;" FontFamily="Segoe Fluent Icons" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+                <MenuFlyoutItem Text="Close side panel" Command="{Binding CloseSidePanelCommand}">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon Glyph="&#xea49;" FontFamily="Segoe Fluent Icons" />
+                    </MenuFlyoutItem.Icon>
+                </MenuFlyoutItem>
+            </MenuBarItem>
+            <MenuBarItem Title="Settings" Height="32" Margin="0">
+                <MenuFlyoutSubItem Text="System settings">
+                    <MenuFlyoutSubItem.Icon>
+                        <FontIcon Glyph="&#xe713;" FontFamily="Segoe Fluent Icons" />
+                    </MenuFlyoutSubItem.Icon>
+                    <ToggleMenuFlyoutItem Text="Allow toast notifications" IsChecked="{Binding AllowToastNotifications, Mode=TwoWay}" />
+                </MenuFlyoutSubItem>
+                <MenuFlyoutSubItem Text="Video settings">
+                    <MenuFlyoutSubItem.Icon>
+                        <FontIcon Glyph="&#xe786;" FontFamily="Segoe Fluent Icons" />
+                    </MenuFlyoutSubItem.Icon>
+                    <ToggleMenuFlyoutItem Text="Concurrent video loading" IsChecked="{Binding ConcurrentVideoLoading, Mode=TwoWay}" />
+                </MenuFlyoutSubItem>
+            </MenuBarItem>
+            <MenuBarItem Title="About" Height="32" Margin="0">
+                <MenuFlyoutItem Text="{Binding Version}" Command="{Binding OpenFeaturesCommand}" />
+                <MenuFlyoutItem Text="{Binding Copyright}" Command="{Binding OpenLicensesCommand}" />
+            </MenuBarItem>
+        </MenuBar>
+        
+    </Grid>
+
+</UserControl>

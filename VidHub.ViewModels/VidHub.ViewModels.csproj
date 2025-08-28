@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VidHub.Core\VidHub.Core.csproj" />
+    <ProjectReference Include="..\VidHub.Platform\VidHub.Platform.csproj" />
+    <ProjectReference Include="..\VidHub.Services\VidHub.Services.csproj" />
+  </ItemGroup>
+
+</Project>
