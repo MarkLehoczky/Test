@@ -4,45 +4,10 @@ on:
   [push]
 
 jobs:
-  # 1️⃣ Build Solution
-  build:
-    runs-on: windows-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-      - name: Restore Dependencies
-        run: dotnet restore
-      - name: Build All Projects
-        run: dotnet build --no-restore
-
-  # 2️⃣ Run Tests (Unit Tests)
-  test:
-    runs-on: windows-latest
-    needs: build
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-      - name: Restore Dependencies
-        run: dotnet restore
-      - name: Run Tests
-        shell: pwsh
-        run: |
-          if (Test-Path "./tests") {
-              dotnet test --configuration Release --no-build
-          } else {
-              Write-Host "No test projects found, skipping unit tests."
-          }
 
   # 3️⃣ Manual QA Verification
   manual-approval:
-    runs-on: windows-latest
-    needs: [build]
+    runs-on: ubuntu-latest
     steps:
       - name: Manual Workflow Approval
       # You may pin to the exact commit or the version.
@@ -61,29 +26,3 @@ jobs:
           additional-approved-words: approve,approved
           # Comma separated list of words that can be used to deny beyond the defaults.
           additional-denied-words: deny,denied
-          
-          
-
-
-  # 4️⃣ Publish / Package after QA
-  publish:
-    runs-on: windows-latest
-    needs: [test, manual-approval]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
-      - name: Restore Dependencies
-        run: dotnet restore
-      - name: Build Solution for Packaging
-        run: dotnet build --configuration Release --no-restore
-      - name: Create MSIX Package
-        run: |
-          msbuild YourSolution.sln /p:Configuration=Release /p:UapAppxPackageBuildMode=StoreUpload /p:AppxPackageDir="$(Build.ArtifactStagingDirectory)\AppPackages\\" /p:AppxBundle=Always
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: WinUI-App-Package
-          path: '**/*.msixbundle'
