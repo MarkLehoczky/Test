@@ -21,11 +21,9 @@ jobs:
           approvers: MarkLehoczky
           # Secret
           secret: ${{ secrets.GITHUB_TOKEN }}
-          # Minimum number of approvals to progress workflow
           minimum-approvals: 1
-          # Whether or not to filter out the user who initiated the workflow as an approver if they are in the approvers list
+          issue-title: "Manual Testing"
+          issue-description: "Responde with PASS or FAIL based on the result of the manual testing."
           exclude-workflow-initiator-as-approver: false
-          # Comma separated list of words that can be used to approve beyond the defaults.
-          additional-approved-words: approve,approved
-          # Comma separated list of words that can be used to deny beyond the defaults.
-          additional-denied-words: deny,denied
+          additional-approved-words: pass,passsed,PASS,PASSED
+          additional-denied-words: fail,failed,FAIL,FAILED
