@@ -46,20 +46,28 @@ jobs:
 
   # 3️⃣ Manual QA Verification
   manual-approval:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
+    needs: [build]
     steps:
-    - uses: trstringer/manual-approval@v1
-      with:
-        secret: ${{ github.TOKEN }}
-        approvers: user1,user2,org-team1
-        minimum-approvals: 1
-        issue-title: "Deploying v1.3.5 to prod from staging"
-        issue-body: "Please approve or deny the deployment of version v1.3.5."
-        issue-body-file-path: relative/file_path/wrt/repo/root
-        exclude-workflow-initiator-as-approver: false
-        fail-on-denial: true
-        additional-approved-words: ''
-        additional-denied-words: ''
+      - name: Manual Workflow Approval
+      # You may pin to the exact commit or the version.
+      # uses: trstringer/manual-approval@a824dad59ac64ac825ab8725599e483e24aa2815
+        uses: trstringer/manual-approval@v1.9.0
+        with:
+          # Required approvers
+          approvers: marklehoczky
+          # Secret
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          # Minimum number of approvals to progress workflow
+          minimum-approvals: 1
+          # Whether or not to filter out the user who initiated the workflow as an approver if they are in the approvers list
+          exclude-workflow-initiator-as-approver: false
+          # Comma separated list of words that can be used to approve beyond the defaults.
+          additional-approved-words: approve,approved
+          # Comma separated list of words that can be used to deny beyond the defaults.
+          additional-denied-words: deny,denied
+          
+          
 
 
   # 4️⃣ Publish / Package after QA
