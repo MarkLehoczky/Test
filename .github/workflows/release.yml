@@ -1,12 +1,7 @@
 name: WinUI Release Pipeline
 
 on:
-  pull_request:
-    branches:
-      - release,main
-  push:
-    branches:
-      - release,main
+  [push]
 
 jobs:
   # 1️⃣ Build Solution
