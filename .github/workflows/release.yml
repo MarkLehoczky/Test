@@ -18,7 +18,7 @@ jobs:
         uses: trstringer/manual-approval@v1.9.0
         with:
           # Required approvers
-          approvers: marklehoczky
+          approvers: MarkLehoczky
           # Secret
           secret: ${{ secrets.GITHUB_TOKEN }}
           # Minimum number of approvals to progress workflow
