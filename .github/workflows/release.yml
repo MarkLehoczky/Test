@@ -45,24 +45,23 @@ jobs:
           }
 
   # 3️⃣ Manual QA Verification
-  manual-qa:
+  manual-approval:
     runs-on: ubuntu-latest
-    needs: test
     steps:
-      - name: Require QA Approval
-        uses: fjogeleit/approve-action@v2
+      - name: Request Manual Approval
+        uses: trstringer/manual-approval@v1
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          approvers: 'marklehoczky' # QA person
-          review-message: 'Please verify manual testing is done and approve.'
-          allow-approve: true
-      - name: QA Approved
-        run: echo "Manual QA verification complete."
+          secret: ${{ secrets.GITHUB_TOKEN }}
+          approvers: your-github-username
+          issue-title: 'Deploying v1.3.5 to production'
+          issue-body: 'Please approve or deny the deployment of version v1.3.5.'
+          fail-on-denial: true
+
 
   # 4️⃣ Publish / Package after QA
   publish:
     runs-on: windows-latest
-    needs: [test, manual-qa]
+    needs: [test, manual-approval]
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
