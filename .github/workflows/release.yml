@@ -8,6 +8,9 @@ jobs:
   # 3️⃣ Manual QA Verification
   manual-approval:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      actions: write
     steps:
       - name: Manual Workflow Approval
       # You may pin to the exact commit or the version.
