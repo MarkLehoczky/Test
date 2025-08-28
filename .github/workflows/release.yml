@@ -47,14 +47,16 @@ jobs:
   # 3️⃣ Manual QA Verification
   manual-qa:
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     steps:
-      - name: Manual Testing
+      - name: Require QA Approval
         uses: fjogeleit/approve-action@v2
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          approvers: 'marklehoczky' # QA person
           review-message: 'Please verify manual testing is done and approve.'
           allow-approve: true
-      - name: Application Approved
+      - name: QA Approved
         run: echo "Manual QA verification complete."
 
   # 4️⃣ Publish / Package after QA
